@@ -1,0 +1,233 @@
+@import "tailwindcss";
+
+/* ───────────────────────────────────────────────────────────
+   "Riso press" — fluorescent print inks on cool paper.
+   Light is the default; dark applies via system preference
+   unless the person picked a theme (data-theme on <html>).
+   ─────────────────────────────────────────────────────────── */
+
+:root {
+  --bg: #f5f6fa;
+  --surface: #ffffff;
+  --surface-2: #eceef6;
+  --text: #151838;
+  --muted: #5f6485;
+  --line: #dfe2ee;
+  --line-strong: #c5c9dc;
+
+  --blue: #3d4be0;
+  --pink: #f0398f;
+  --yellow: #ffbf1f;
+  --teal: #0fa898;
+  --violet: #7b5cf0;
+  --danger: #d93a52;
+
+  --primary: var(--blue);
+  --on-primary: #ffffff;
+  --blend: multiply;
+  --cover-bg: #e8eaf6;
+  --shadow: 0 1px 0 rgba(21, 24, 56, 0.04), 0 12px 32px -16px rgba(21, 24, 56, 0.18);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111214;
+    --surface: #1a1b1e;
+    --surface-2: #232428;
+    --text: #ededee;
+    --muted: #9b9ca1;
+    --line: #2c2d31;
+    --line-strong: #3e3f44;
+    --blue: #5aa9ff;
+    --pink: #e5587d;
+    --yellow: #ffc23d;
+    --teal: #34d3b4;
+    --violet: #b79cff;
+    --danger: #ff7a59;
+    --primary: #cc4a64;
+    --on-primary: #ffffff;
+    --blend: screen;
+    --overprint: var(--primary);
+    --overprint-shadow: var(--yellow);
+    --cover-bg: #1f2023;
+    --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 16px 40px -18px rgba(0, 0, 0, 0.8);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #111214;
+  --surface: #1a1b1e;
+  --surface-2: #232428;
+  --text: #ededee;
+  --muted: #9b9ca1;
+  --line: #2c2d31;
+  --line-strong: #3e3f44;
+  --blue: #5aa9ff;
+  --pink: #e5587d;
+  --yellow: #ffc23d;
+  --teal: #34d3b4;
+  --violet: #b79cff;
+  --danger: #ff7a59;
+  --primary: #cc4a64;
+  --on-primary: #ffffff;
+  --blend: screen;
+  --overprint: var(--primary);
+  --overprint-shadow: var(--yellow);
+  --cover-bg: #1f2023;
+  --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 16px 40px -18px rgba(0, 0, 0, 0.8);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-blue: var(--blue);
+  --color-pink: var(--pink);
+  --color-yellow: var(--yellow);
+  --color-teal: var(--teal);
+  --color-violet: var(--violet);
+  --color-danger: var(--danger);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+
+  --font-sans: "Rubik", system-ui, sans-serif;
+  --font-display: "Unbounded", "Rubik", system-ui, sans-serif;
+  --font-read: "Literata", Georgia, serif;
+
+  --shadow-lift: var(--shadow);
+}
+
+html {
+  background: var(--bg);
+  color: var(--text);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--bg);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--yellow) 55%, transparent);
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Display headings: Unbounded for Latin; Arabic falls back to bold Rubik. */
+.display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+:lang(ar) .display,
+.display:lang(ar) {
+  letter-spacing: 0;
+}
+
+/* Riso misregistration: the logo + big moments print twice, slightly off. */
+.overprint {
+  color: var(--overprint, var(--blue));
+  text-shadow: 0.06em 0.05em 0 color-mix(in srgb, var(--overprint-shadow, var(--pink)) 85%, transparent);
+}
+
+/* Inline highlight used for vocabulary words inside sentences. */
+.hl {
+  background: none;
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.32em;
+  text-underline-offset: -0.12em;
+  text-decoration-skip-ink: none;
+  text-decoration-color: color-mix(in srgb, var(--ink, var(--yellow)) 45%, transparent);
+}
+
+/* Reader tokens */
+.tok {
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.12s;
+}
+.tok:hover {
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+}
+.tok.in-list {
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.14em;
+  text-underline-offset: 0.22em;
+  text-decoration-color: var(--ink, var(--pink));
+}
+.tok.is-active {
+  background: var(--yellow);
+  color: #151838;
+  text-decoration-color: transparent;
+}
+
+/* Speaker buttons pulse while a word's audio is fetched the first time. */
+.is-loading { animation: pulse-ring 0.9s ease-in-out infinite; }
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary) 45%, transparent); }
+  50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary) 0%, transparent); }
+}
+
+/* Paragraph bookmark ribbon: shows on hover (always on touch screens). */
+.bm-btn { opacity: 0; }
+.group:hover > .bm-btn, .bm-btn:focus-visible, .bm-btn.is-on { opacity: 1; }
+@media (hover: none) { .bm-btn { opacity: 0.45; } }
+
+/* Briefly highlight the paragraph a bookmark/resume jumped to. */
+@keyframes flash {
+  0%, 40% { background: color-mix(in srgb, var(--yellow) 32%, transparent); }
+  100% { background: transparent; }
+}
+.flash > p { animation: flash 1.6s ease-out; border-radius: 10px; }
+
+/* Generated covers blend their inks like overprinted riso layers. */
+.cover-ink > * {
+  mix-blend-mode: var(--blend);
+}
+.cover-ink {
+  isolation: isolate;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes rise {
+  from { transform: translateY(14px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.rise { animation: rise 0.22s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+@keyframes reveal {
+  from { opacity: 0; filter: blur(6px); }
+  to { opacity: 1; filter: blur(0); }
+}
+.reveal { animation: reveal 0.25s ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
